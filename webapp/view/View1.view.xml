@@ -14,12 +14,23 @@
     >
         <VBox
             id="_IDGenVBox1"
-            class="sapUiSmallMargin"
+            height="100%"
+           width="100%"
+
         >
             <f:SimpleForm
                 id="SimpleForm"
-                editable="true"
-                layout="ColumnLayout"
+                          maxContainerCols="2"
+                          editable="true"
+                          layout="ResponsiveGridLayout"
+                          labelSpanL="3"
+                          labelSpanM="3"
+                          columnsL="2"
+                          columnsM="2"
+                          emptySpanL="4"
+                          emptySpanM="4"
+                          adjustLabelSpan="false"
+                          class="editableForm"
                 title="Request Form"
             >
                 <f:content>
@@ -522,21 +533,21 @@
 
             <core:Fragment fragmentName="project3.view.fragments.uploadfilepan" id="fileListFragmentpan" type="XML"/>
             <core:Fragment fragmentName="project3.view.fragments.uploadfilegst" id="fileListFragmentgst" type="XML"/>
-
-            <FlexBox
-                id="_IDGenFlexBox1"
-                height="100px"
-                alignItems="Start"
-                justifyContent="Center"
-            >
+                
+            <Toolbar id="_IDGenToolbar1">
+                <ToolbarSpacer id="_IDGenToolbarSpacer"/>
                 <Button
                     id="_IDGenButton1"
-                    width="200px"
                     class="sapUiSmallMargin"
                     text="Submit"
                     press="onFormsubmit"
+                    width="100px"
+                    type="Emphasized"
                 />
-            </FlexBox>
+                <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+            </Toolbar>
+           
         </VBox>
+         
     </Page>
 </mvc:View>

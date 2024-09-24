@@ -11,10 +11,10 @@ sap.ui.define([
 
         return Controller.extend("project3.controller.View1", {
             onInit: function () {
-                onReadSupplierSpendType();
-                onReadNatureofActivity();
-                onReadDepartments();
-                onReadSector(); 
+                // onReadSupplierSpendType();
+                // onReadNatureofActivity();
+                // onReadDepartments();
+                // onReadSector(); 
 
                 var currentDate = new Date();
                 var maxDate = new Date();
@@ -352,7 +352,11 @@ sap.ui.define([
             this._oDialog.open();
         },
        
-        onCloseDialog: function () {
+        onCloseDialogpan: function () {
+            this._oDialog.close();
+        },
+
+        onCloseDialoggst: function () {
             this._oDialog.close();
         },
         

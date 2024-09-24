@@ -30,7 +30,7 @@
                 </List>
                 
         <endButton>
-            <Button id="_IDGenButton6" text="Close" press=".onCloseDialog" />
+            <Button id="_IDGenButton6" text="Close" press=".onCloseDialogpan" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>
