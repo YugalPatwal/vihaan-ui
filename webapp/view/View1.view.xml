@@ -372,7 +372,7 @@
                     <Button
                         id="panuploadbutton"
                         text="{path: '/pan', formatter: '.formatAttachmentButtonText'}"
-                        press="onOpenDialogpan~"
+                        press="onOpenDialogpan"
                     />
 
 

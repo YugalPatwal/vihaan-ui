@@ -305,7 +305,7 @@ sap.ui.define([
                     oModel.setProperty("/gst", aFiles);
  
                       // Log updated /files data to console
-            console.log("Updated /Pan attachment:", oModel.getProperty("/gst"));
+            console.log("Updated /Gst attachment:", oModel.getProperty("/gst"));
        
                     // Show success message
                     MessageToast.show("File " + sFileName + " uploaded successfully.");
@@ -351,45 +351,74 @@ sap.ui.define([
         onCloseDialog: function () {
             this._oDialog.close();
         },
-        onCloseDialoggst: function () {
-            this._oDialog.close();
-        },
- 
-       
+        
         onFormsubmit: function () {
             // Get the view
             var oView = this.getView();
 
+            var oModel = this.getView().getModel();
+            
             // Collect form field values
             var oFormData = {
-                validity: oView.byId("datePicker").getDateValue(), // Get DatePicker value
-                relatedParty: oView.byId("radioGroup").getSelectedButton().getText(), // Get RadioButton selected text
-                supplierSpendType: oView.byId("Id1").getSelectedKey(), // Get Select value for Supplier Spend Type
-                natureOfActivity: oView.byId("Id2").getSelectedKey(), // Get Select value for Nature of Activity
-                sector: oView.byId("sectorComboBox").getSelectedKeys(), // Get MultiComboBox selected keys (multiple values)
-                FunctionandSubfunctionComboBox: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(), // Get MultiComboBox selected keys (multiple values)
-                panCardNumber: oView.byId("panInput").getValue(), // Get PAN card value
-                gstinNumber: oView.byId("gstInput").getValue(), // Get GSTIN value
-                supplierFullName: oView.byId("SupplierNameInput").getValue(), // Get Supplier Full Name
-                supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(), // Get Supplier Trade Name
-                supplierAddress: oView.byId("SupplierAddressInput").getValue(), // Get Supplier Address
-                supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(), // Get Supplier GST Address
-                primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(), // Get Primary Contact First Name
-                primaryLastName: oView.byId("PrimaryLastnameInput").getValue(), // Get Primary Contact Last Name
-                primaryEmail: oView.byId("emailInput").getValue(), // Get Email value
-                primaryPhone: oView.byId("numberInput").getValue() // Get Phone number value
+                validity: oView.byId("datePicker").getDateValue(), 
+                relatedParty: oView.byId("radioGroup").getSelectedButton().getText(), 
+                supplierSpendType: oView.byId("Id1").getSelectedKey(), 
+                natureOfActivity: oView.byId("Id2").getSelectedKey(), 
+                sector: oView.byId("sectorComboBox").getSelectedKeys(),
+                FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(), 
+                panCardNumber: oView.byId("panInput").getValue(), 
+                gstinNumber: oView.byId("gstInput").getValue(), 
+                supplierFullName: oView.byId("SupplierNameInput").getValue(), 
+                supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(), 
+                supplierAddress: oView.byId("SupplierAddressInput").getValue(), 
+                supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(), 
+                primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(), 
+                primaryLastName: oView.byId("PrimaryLastnameInput").getValue(), 
+                primaryEmail: oView.byId("emailInput").getValue(), 
+                primaryPhone: oView.byId("numberInput").getValue() 
             };
+
+            var oNewEntry = {
+                    "DigressionVendorCodeVal": oFormData.validity ,          
+                    "IsRelPartyVCode": oFormData.relatedParty,                          
+                    "SpendType": oFormData.supplierSpendType,               
+                    "NatureOfActivity": oFormData.natureOfActivity,                
+                    "Sector": oFormData.sector,                
+                    "FunAndSubfun": oFormData.FunctionandSubfunction,                
+                    "PANCardNo": oFormData.panCardNumber,                        
+                    "GSTIN": oFormData.gstinNumber,                       
+                    "SFullName": oFormData.supplierFullName,                
+                    "STradeNameGST": oFormData.supplierTradeName,                     
+                    "SAddress": oFormData.supplierAddress,   
+                    "SAddressGST": oFormData.supplierGstAddress,
+                    "PriContactFName": oFormData.primaryFirstName,                        
+                    "PriContactLName": oFormData.primaryLastName,                         
+                    "PriContactEmail": oFormData.primaryEmail,        
+                    "PriContactMNumber": oFormData.primaryPhone                
+                };
 
             // Output form data to the console (or process it further)
             console.log(oFormData);
+            console.log(oNewEntry);
 
+            // Use the OData create method
+            oModel.setUseBatch(false);
+            oModel.create("/odata/v4/attachments/supplierReqSrv", oNewEntry, {
+                method: "POST",
+                success: function () {
+                    MessageToast.show("Form submitted successfully.");
+                }.bind(this),  // Ensure 'this' refers to the controller instance
+                error: function () {
+                    MessageToast.show("Error while submitting the Form.");
+                }
+            });
+
+        
             // Show a success message (or handle the form data as needed)
             MessageToast.show("Form submitted successfully!");
 
-            // You can now send oFormData to your backend, or perform further validation.
         },
 
-        // Additional methods such as validations (onPanCardChange, onGSTINChange, etc.)
     });
 });
       
