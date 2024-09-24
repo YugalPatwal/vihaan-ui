@@ -1,0 +1,35 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="_IDGenDialog2" title="Uploaded Files" class="sapUiResponsivePadding" draggable="true" resizable="true">
+        <!-- <List id="fileList2" items="{/pan}">
+            <StandardListItem id="_IDGenStandardListItem" title="{fileName}"
+                icon="{= ${fileName}.endsWith('.pdf') ? 'sap-icon://pdf-attachment' : ${fileName}.endsWith('.jpg') || ${fileName}.endsWith('.png') ? 'sap-icon://attachment-photo' : 'sap-icon://document'}" />
+        </List> -->
+                <List
+                    id="fileList"
+                    items="{/gst}"
+                    headerText="">
+                   
+                    <CustomListItem id="_IDGenCustomListItem">
+                        <HBox id="_IDGenHBox" justifyContent="SpaceBetween" alignItems="Center" width="100%">
+                            <!-- File name and download link -->
+                            <Link id="_IDGenLink" text="{fileName}" press="onDownload">
+                                <customData>
+                                    <core:CustomData key="fileUrl" value="{fileUrl}" />
+                                </customData>
+                            </Link>
+                           
+                            <!-- Delete button -->
+                            <Button id="_IDGenButton8"
+                                icon="sap-icon://delete"
+                                type="Transparent"
+                                press="onDeleteFilegst" />
+                        </HBox>
+                    </CustomListItem>
+                </List>
+        <endButton>
+            <Button id="_IDGenButton5" text="Close" press=".onCloseDialoggst" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
