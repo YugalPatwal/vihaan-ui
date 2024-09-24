@@ -62,7 +62,7 @@
                         required="true"
                     />
                     <Select
-                        id="Id1"
+                        id="supplierSpendType"
                         selectedKey=""
                     >
                         <items>
@@ -109,7 +109,7 @@
                         required="true"
                     />
                     <Select
-                        id="Id2"
+                        id="NatureofActivity"
                         selectedKey=""
                     >
                         <items>

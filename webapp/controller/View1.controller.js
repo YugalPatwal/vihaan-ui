@@ -11,6 +11,10 @@ sap.ui.define([
 
         return Controller.extend("project3.controller.View1", {
             onInit: function () {
+                onReadSupplierSpendType();
+                onReadNatureofActivity();
+                onReadDepartments();
+                onReadSector(); 
 
                 var currentDate = new Date();
                 var maxDate = new Date();
@@ -362,8 +366,8 @@ sap.ui.define([
             var oFormData = {
                 validity: oView.byId("datePicker").getDateValue(), 
                 relatedParty: oView.byId("radioGroup").getSelectedButton().getText(), 
-                supplierSpendType: oView.byId("Id1").getSelectedKey(), 
-                natureOfActivity: oView.byId("Id2").getSelectedKey(), 
+                supplierSpendType: oView.byId("supplierSpendType").getSelectedKey(), 
+                natureOfActivity: oView.byId("NatureofActivity").getSelectedKey(), 
                 sector: oView.byId("sectorComboBox").getSelectedKeys(),
                 FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(), 
                 panCardNumber: oView.byId("panInput").getValue(), 
@@ -418,6 +422,66 @@ sap.ui.define([
             MessageToast.show("Form submitted successfully!");
 
         },
+        onReadDepartments: function(){
+            var that = this;
+                var oModel = this.getOwnerComponent().getModel();
+                oModel.read("/departmentsSrv", {
+                    success: function (oData) {
+                        console.log(oData);
+                        var jModel = new sap.ui.model.json.JSONModel(oData);
+                        that.getView().byId("FunctionandSubfunctionComboBox").setModel(jModel);
+ 
+                    },
+                    error: function (oError) {
+                        console.log(oError);
+                    }
+                })
+            },
+            onReadSector: function(){
+                var that = this;
+                    var oModel = this.getOwnerComponent().getModel();
+                    oModel.read("/SectorSrv", {
+                        success: function (oData) {
+                            console.log(oData);
+                            var jModel = new sap.ui.model.json.JSONModel(oData);
+                            that.getView().byId("sectorComboBox").setModel(jModel);
+     
+                        },
+                        error: function (oError) {
+                            console.log(oError);
+                        }
+                    })
+                },
+                onReadNatureofActivity: function(){
+                    var that = this;
+                        var oModel = this.getOwnerComponent().getModel();
+                        oModel.read("/NatureOfActivitySrv", {
+                            success: function (oData) {
+                                console.log(oData);
+                                var jModel = new sap.ui.model.json.JSONModel(oData);
+                                that.getView().byId("NatureofActivity").setModel(jModel);
+         
+                            },
+                            error: function (oError) {
+                                console.log(oError);
+                            }
+                        })
+                    },
+                    onReadSupplierSpendType: function(){
+                        var that = this;
+                            var oModel = this.getOwnerComponent().getModel();
+                            oModel.read("/SupplierSpendTypeSrv", {
+                                success: function (oData) {
+                                    console.log(oData);
+                                    var jModel = new sap.ui.model.json.JSONModel(oData);
+                                    that.getView().byId("supplierSpendType").setModel(jModel);
+             
+                                },
+                                error: function (oError) {
+                                    console.log(oError);
+                                }
+                            })
+                        },
 
     });
 });
