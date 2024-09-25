@@ -1,0 +1,23 @@
+{
+    "customers": [
+      {
+        "GSTIN": "22ABCDE1234F1Z5",
+        "Name": "ABC Pvt Ltd",
+        "Address": "123, Business Street, Mumbai, Maharashtra, 400001",
+        "ContactNumber": "+91-9876543210"
+      },
+      {
+        "GSTIN": "19ABCDE1234F1Z2",
+        "Name": "XYZ Enterprises",
+        "Address": "45, Industrial Area, Kolkata, West Bengal, 700001",
+        "ContactNumber": "+91-9123456789"
+      },
+      {
+        "GSTIN": "07A1BC2345D1Z3",
+        "Name": "LMN Corp",
+        "Address": "99, Corporate Park, New Delhi, Delhi, 110001",
+        "ContactNumber": "+91-9876541230"
+      }
+    ]
+  }
+  

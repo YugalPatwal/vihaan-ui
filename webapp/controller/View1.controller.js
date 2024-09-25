@@ -4,9 +4,12 @@ sap.ui.define([
     "sap/ui/core/Icon",
     "sap/m/Link",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/Text"
 ],
-    function (Controller, MessageToast, Icon, JSONModel, Fragment) {
+    function (Controller, MessageToast, Icon, JSONModel, Fragment, Dialog, Button, Text) {
         "use strict";
 
         return Controller.extend("project3.controller.View1", {
@@ -24,6 +27,10 @@ sap.ui.define([
 
                 oDatePicker.setMinDate(currentDate);
                 oDatePicker.setMaxDate(maxDate);
+
+                var oModel1 = new sap.ui.model.json.JSONModel();
+                oModel1.loadData("/model/data.json");
+                this.getView().setModel(oModel1, "customerModel");
 
 
 
@@ -82,14 +89,53 @@ sap.ui.define([
                 }
             },
 
-            onSubmitgst: function () {
-                var oGSTINInput = this.byId("gstinInput");
-                var sGSTINValue = oGSTINInput.getValue();
+            // onSubmitgst: function () {
+            //     var oGSTINInput = this.byId("gstinInput");
+            //     var sGSTINValue = oGSTINInput.getValue();
 
-                if (oGSTINInput.getValueState() === "Success") {
-                    MessageToast.show("GSTIN are valid:" + sGSTINValue);
+            //     if (oGSTINInput.getValueState() === "Success") {
+            //         MessageToast.show("GSTIN are valid:" + sGSTINValue);
+            //     } else {
+            //         MessageToast.show("Please enter a valid GSTIN or Please ensure both PAN and GSTIN are valid and matching.");
+            //     }
+            // },
+            onSubmitgst: function () {
+                // Get the input value from the user
+                var sGstinInput = this.byId("gstinInput").getValue().trim();
+
+                // Access the model with customer data
+                var oModel = this.getView().getModel("customerModel");
+                var oData = oModel.getProperty("/customers");
+
+                // Find customer based on GSTIN
+                var oCustomer = oData.find(function (customer) {
+                    return customer.GSTIN === sGstinInput;
+                });
+
+                if (oCustomer) {
+                    // GSTIN found, show details in a dialog
+                    var oDialog = new sap.m.Dialog({
+                        title: "Customer Details",
+                        content: new sap.m.Text({
+                            text: "  Name: " + oCustomer.Name + "\n" +
+                                "  Address: " + oCustomer.Address + "\n" +
+                                "  Contact Number: " + oCustomer.ContactNumber
+                        }),
+                        beginButton: new sap.m.Button({
+                            text: "OK",
+                            press: function () {
+                                oDialog.close();
+                            }
+                        }),
+                        afterClose: function () {
+                            oDialog.destroy();
+                        }
+                    });
+
+                    oDialog.open();
                 } else {
-                    MessageToast.show("Please enter a valid GSTIN or Please ensure both PAN and GSTIN are valid and matching.");
+                    // GSTIN not found, show message toast
+                    MessageToast.show("GSTIN not found!");
                 }
             },
 
@@ -338,16 +384,16 @@ sap.ui.define([
 
             onOpenDialogpan: function () {
                 if (!this._oDialog) {
-                    
+
                     this._oDialog = this.getView().byId("panDialog");
 
-                if (!this._oDialog) {
-                    this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilepan", this);
-                    this.getView().addDependent(this._oDialog);
+                    if (!this._oDialog) {
+                        this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilepan", this);
+                        this.getView().addDependent(this._oDialog);
+                    }
+                    this._oDialog.open();
                 }
-                this._oDialog.open();
-            }
-        },
+            },
 
             onOpenDialoggst: function () {
                 if (!this._oDialog) {
@@ -497,7 +543,42 @@ sap.ui.define([
                         console.log(oError);
                     }
                 })
-            }
+            },
+            onSave: function () {
+                // Get the view
+                var oView = this.getView();
+
+                var oModel = this.getView().getModel();
+
+                // Collect form field values
+                var oFormData = {
+                    validity: oView.byId("datePicker").getDateValue(),
+                    relatedParty: oView.byId("radioGroup").getSelectedButton().getText(),
+                    supplierSpendType: oView.byId("supplierSpendType").getSelectedKey(),
+                    natureOfActivity: oView.byId("NatureofActivity").getSelectedKey(),
+                    sector: oView.byId("sectorComboBox").getSelectedKeys(),
+                    FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(),
+                    panCardNumber: oView.byId("panInput").getValue(),
+                    gstinNumber: oView.byId("gstinInput").getValue(),
+                    supplierFullName: oView.byId("SupplierNameInput").getValue(),
+                    supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(),
+                    supplierAddress: oView.byId("SupplierAddressInput").getValue(),
+                    supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(),
+                    primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(),
+                    primaryLastName: oView.byId("PrimaryLastnameInput").getValue(),
+                    primaryEmail: oView.byId("emailInput").getValue(),
+                    primaryPhone: oView.byId("numberInput").getValue()
+                };
+
+                // Output form data to the console (or process it further)
+                console.log(oFormData);
+
+
+                // Show a success message (or handle the form data as needed)
+                MessageToast.show("Form submitted successfully!");
+
+            },
+
 
         });
     });

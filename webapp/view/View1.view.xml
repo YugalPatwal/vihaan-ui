@@ -10,7 +10,7 @@
 >
     <Page
         id="page"
-        title="{i18n>title}"
+        title=""
     >
         <VBox
             id="_IDGenVBox1"
@@ -34,7 +34,7 @@
                 title="Request Form"
             >
                 <f:content>
-                    <Label
+                  <Label
                         id="_IDGenLabel"
                         text="Validity of digression vendor code upto"
                         required="true"
@@ -44,7 +44,7 @@
                         valueFormat="yyyy-MM-dd"
                         displayFormat="long"
                     />
-
+ 
                     <Label
                         id="_IDGenLabel1"
                         text="Is it a related party vendor code?"
@@ -66,24 +66,54 @@
                             />
                         </buttons>
                     </RadioButtonGroup>
-
+ 
                     <Label
                         id="_IDGenLabel3"
                         text="Supplier Spend Type"
                         required="true"
                     />
-                       <Select
+                    <Select
                         id="supplierSpendType"
                         selectedKey=""
-                        items="{/results}">
+                    >
                         <items>
                             <core:Item
                                 id="_IDGenItem"
-                                text="{SpendsTypes}"
-                                key="{ID}"
+                                text="{i18n>data1}"
+                                key="{i18n>data1}"
+                            />
+                            <core:Item
+                                id="_IDGenItem1"
+                                text="{i18n>data2}"
+                                key="{i18n>data2}"
+                            />
+                            <core:Item
+                                id="_IDGenItem3"
+                                text="{i18n>data3}"
+                                key="{i18n>data3}"
+                            />
+                            <core:Item
+                                id="_IDGenItem4"
+                                text="{i18n>data4}"
+                                key="{i18n>data4}"
+                            />
+                            <core:Item
+                                id="_IDGenItem5"
+                                text="{i18n>data5}"
+                                key="{i18n>data5}"
+                            />
+                            <core:Item
+                                id="_IDGenItem6"
+                                text="{i18n>data6}"
+                                key="{i18n>data6}"
+                            />
+                            <core:Item
+                                id="_IDGenItem7"
+                                text="{i18n>data7}"
+                                key="{i18n>data7}"
                             />
                         </items>
-                        </Select>
+                    </Select>
                     <Label
                         id="_IDGenLabel4"
                         text="Nature of Activity"
@@ -92,28 +122,30 @@
                     <Select
                         id="NatureofActivity"
                         selectedKey=""
-                        items="{/results}">
+                    >
                         <items>
                             <core:Item
-                                id="_IDGenItem1"
-                                text="{NatureofActivity}"
-                                key="{ID}"
+                                id="_IDGenItem8"
+                                text="{i18n>data8}"
+                                key="{i18n>data8}"
+                            />
+                            <core:Item
+                                id="_IDGenItem9"
+                                text="{i18n>data9}"
+                                key="{i18n>data9}"
                             />
                         </items>
-                        </Select>
-
+                    </Select>
+ 
                     <Label
                         id="_IDGenLabel5"
                         text="Sector"
                         required="true"
                     />
-                    <MultiComboBox id="sectorComboBox" selectedKeys="" placeholder="Select multiple sectors" items="{/results}">
+                    <MultiComboBox id="sectorComboBox" selectedKeys="" placeholder="Select multiple sectors">
                         <items>
-                            <core:Item id="_IDGenItem100"   text="{Sector}-{Description}"
-                                key="{ID}"/>
-                                  </items>
-                    </MultiComboBox>
-                            <!-- <core:Item id="_IDGenItem110" text="{i18n>data11}" key="{i18n>data11}"/>
+                            <core:Item id="_IDGenItem100" text="{i18n>data10}" key="{i18n>data10}"/>
+                            <core:Item id="_IDGenItem110" text="{i18n>data11}" key="{i18n>data11}"/>
                             <core:Item
                                 id="_IDGenItem12"
                                 text="{i18n>data12}"
@@ -168,8 +200,9 @@
                                 id="_IDGenItem22"
                                 text="{i18n>data22}"
                                 key="{i18n>data22}"
-                            /> -->
-                      
+                            />
+                        </items>
+                    </MultiComboBox>
       
         <!-- <Select id="parentSelect" change="onParentSelectChange" items="{
                 path: '/parentOptions'
@@ -374,7 +407,7 @@
                         required="true"
                     /> 
                     <Input
-                        id="gstInput"
+                        id="gstinInput"
                         placeholder="22ABCDE1234F1Z5"
                         value="{/gstinValue}"
                         liveChange="onGSTINChange"
@@ -516,13 +549,20 @@
             <Toolbar id="_IDGenToolbar1">
                 <ToolbarSpacer id="_IDGenToolbarSpacer"/>
                 <Button
+                    id="_IDGenButton2"
+                    text="Save"
+                    press="onSave"
+                    width="100px"
+                    type="Emphasized"
+                />
+                <Button
                     id="_IDGenButton1"
-                    class="sapUiSmallMargin"
                     text="Submit"
                     press="onFormsubmit"
                     width="100px"
                     type="Emphasized"
                 />
+                
                 <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
             </Toolbar>
            
