@@ -72,48 +72,18 @@
                         text="Supplier Spend Type"
                         required="true"
                     />
-                    <Select
+                       <Select
                         id="supplierSpendType"
                         selectedKey=""
-                    >
+                        items="{/results}">
                         <items>
                             <core:Item
                                 id="_IDGenItem"
-                                text="{i18n>data1}"
-                                key="{i18n>data1}"
-                            />
-                            <core:Item
-                                id="_IDGenItem1"
-                                text="{i18n>data2}"
-                                key="{i18n>data2}"
-                            />
-                            <core:Item
-                                id="_IDGenItem3"
-                                text="{i18n>data3}"
-                                key="{i18n>data3}"
-                            />
-                            <core:Item
-                                id="_IDGenItem4"
-                                text="{i18n>data4}"
-                                key="{i18n>data4}"
-                            />
-                            <core:Item
-                                id="_IDGenItem5"
-                                text="{i18n>data5}"
-                                key="{i18n>data5}"
-                            />
-                            <core:Item
-                                id="_IDGenItem6"
-                                text="{i18n>data6}"
-                                key="{i18n>data6}"
-                            />
-                            <core:Item
-                                id="_IDGenItem7"
-                                text="{i18n>data7}"
-                                key="{i18n>data7}"
+                                text="{SpendsTypes}"
+                                key="{ID}"
                             />
                         </items>
-                    </Select>
+                        </Select>
                     <Label
                         id="_IDGenLabel4"
                         text="Nature of Activity"
@@ -122,30 +92,28 @@
                     <Select
                         id="NatureofActivity"
                         selectedKey=""
-                    >
+                        items="{/results}">
                         <items>
                             <core:Item
-                                id="_IDGenItem8"
-                                text="{i18n>data8}"
-                                key="{i18n>data8}"
-                            />
-                            <core:Item
-                                id="_IDGenItem9"
-                                text="{i18n>data9}"
-                                key="{i18n>data9}"
+                                id="_IDGenItem1"
+                                text="{NatureofActivity}"
+                                key="{ID}"
                             />
                         </items>
-                    </Select>
+                        </Select>
 
                     <Label
                         id="_IDGenLabel5"
                         text="Sector"
                         required="true"
                     />
-                    <MultiComboBox id="sectorComboBox" selectedKeys="" placeholder="Select multiple sectors">
+                    <MultiComboBox id="sectorComboBox" selectedKeys="" placeholder="Select multiple sectors" items="{/results}">
                         <items>
-                            <core:Item id="_IDGenItem100" text="{i18n>data10}" key="{i18n>data10}"/>
-                            <core:Item id="_IDGenItem110" text="{i18n>data11}" key="{i18n>data11}"/>
+                            <core:Item id="_IDGenItem100"   text="{Sector}-{Description}"
+                                key="{ID}"/>
+                                  </items>
+                    </MultiComboBox>
+                            <!-- <core:Item id="_IDGenItem110" text="{i18n>data11}" key="{i18n>data11}"/>
                             <core:Item
                                 id="_IDGenItem12"
                                 text="{i18n>data12}"
@@ -200,10 +168,21 @@
                                 id="_IDGenItem22"
                                 text="{i18n>data22}"
                                 key="{i18n>data22}"
-                            />
-                        </items>
-                    </MultiComboBox>
-
+                            /> -->
+                      
+      
+        <!-- <Select id="parentSelect" change="onParentSelectChange" items="{
+                path: '/parentOptions'
+            }">
+            <core:Item id="_IDGenItem3" key="{key}" text="{text}" />
+        </Select>
+        <MultiComboBox id="childMultiComboBox" 
+                       visible="{/childComboBoxVisible}" 
+                       items="{
+                           path: '/childOptions'
+                       }">
+            <core:Item id="_IDGenItem4" key="{key}" text="{text}" />
+        </MultiComboBox> -->
                     <Label
                         id="_IDGenLabel6"
                         text="{i18n>data50}"
@@ -382,7 +361,7 @@
 
                     <Button
                         id="panuploadbutton"
-                        text="{path: '/pan', formatter: '.formatAttachmentButtonText'}"
+                        text="{path: '/pan', formatter: '.formatAttachmentButtonTextpan'}"
                         press="onOpenDialogpan"
                     />
 
@@ -421,7 +400,7 @@
 
                     <Button
                         id="gstuploadbutton"
-                        text="{path: '/gst', formatter: '.formatAttachmentButtonText'}"
+                        text="{path: '/gst', formatter: '.formatAttachmentButtonTextgst'}"
                         press="onOpenDialoggst"
                     />
 

@@ -1,7 +1,7 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog id="_IDGenDialog1" title="Uploaded Files" class="sapUiResponsivePadding" draggable="true" resizable="true">
+    <Dialog id="panDialog" title="Uploaded Files" class="sapUiResponsivePadding" draggable="true" resizable="true">
         <!-- <List id="fileList2" items="{/pan}">
             <StandardListItem id="_IDGenStandardListItem" title="{fileName}"
                 icon="{= ${fileName}.endsWith('.pdf') ? 'sap-icon://pdf-attachment' : ${fileName}.endsWith('.jpg') || ${fileName}.endsWith('.png') ? 'sap-icon://attachment-photo' : 'sap-icon://document'}" />
@@ -30,7 +30,7 @@
                 </List>
                 
         <endButton>
-            <Button id="_IDGenButton6" text="Close" press=".onCloseDialogpan" />
+            <Button id="Dialogclosepan" text="Close" press=".onCloseDialogpan" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

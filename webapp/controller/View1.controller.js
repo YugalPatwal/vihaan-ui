@@ -37,7 +37,6 @@ sap.ui.define([
                 });
                 this.getView().setModel(oModel);
             },
-
             onPanCardChange: function (oEvent) {
                 var oInput = oEvent.getSource();
                 var sValue = oInput.getValue();
@@ -164,31 +163,31 @@ sap.ui.define([
                 document.body.removeChild(oAnchor);
             },
 
-            onFileChangepan: function (oEvent) {
-                var oFileUploader = oEvent.getSource();
-                var oFile = oFileUploader.oFileUpload.files[0]; // Get the first file uploaded
+            // onFileChangepan: function (oEvent) {
+            //     var oFileUploader = oEvent.getSource();
+            //     var oFile = oFileUploader.oFileUpload.files[0]; // Get the first file uploaded
 
-                if (oFile) {
-                    var sFileName = oFile.name;
-                    var oModel = this.getView().getModel();
-                    var aFiles = oModel.getProperty("/pan") || [];
+            //     if (oFile) {
+            //         var sFileName = oFile.name;
+            //         var oModel = this.getView().getModel();
+            //         var aFiles = oModel.getProperty("/pan") || [];
 
-                    aFiles.push({
-                        fileName: sFileName,
-                        fileUrl: URL.createObjectURL(oFile) // Create a temporary URL
-                    });
+            //         aFiles.push({
+            //             fileName: sFileName,
+            //             fileUrl: URL.createObjectURL(oFile) // Create a temporary URL
+            //         });
 
-                    oModel.setProperty("/pan", aFiles);
+            //         oModel.setProperty("/pan", aFiles);
 
-                }
-                // Clear the file uploader field
-                oFileUploader.setValue("");
+            //     }
+            //     // Clear the file uploader field
+            //     oFileUploader.setValue("");
 
-                // Reset the value state for pancard file uploader
-                this.byId("pancardfileUploader").setValueState("");
+            //     // Reset the value state for pancard file uploader
+            //     this.byId("pancardfileUploader").setValueState("");
 
-            },
-        
+            // },
+
             onDeleteFilepan: function (oEvent) {
                 var oButton = oEvent.getSource();
                 var oItem = oButton.getParent().getParent();  // Get the item from the List
@@ -202,30 +201,31 @@ sap.ui.define([
                 oModel.setProperty("/pan", aFiles);  // Update the model
                 MessageToast.show("File deleted successfully.");
             },
-            onFileChangegst: function (oEvent) {
-                var oFileUploader = oEvent.getSource();
-                var oFile = oFileUploader.oFileUpload.files[0]; // Get the first file uploaded
+            // onFileChangegst: function (oEvent) {
+            //     var oFileUploader = oEvent.getSource();
+            //     var oFile = oFileUploader.oFileUpload.files[0]; // Get the first file uploaded
 
-                if (oFile) {
-                    var sFileName = oFile.name;
-                    var oModel = this.getView().getModel();
-                    var aFiles = oModel.getProperty("/gst") || [];
+            //     if (oFile) {
+            //         var sFileName = oFile.name;
+            //         var oModel = this.getView().getModel();
+            //         var aFiles = oModel.getProperty("/gst") || [];
 
-                    aFiles.push({
-                        fileName: sFileName,
-                        fileUrl: URL.createObjectURL(oFile) // Create a temporary URL
-                    });
+            //         aFiles.push({
+            //             fileName: sFileName,
+            //             fileUrl: URL.createObjectURL(oFile) // Create a temporary URL
+            //         });
 
-                    oModel.setProperty("/gst", aFiles);
+            //         oModel.setProperty("/gst", aFiles);
 
-                }
-                // Clear the file uploader field
-                oFileUploader.setValue("");
+            //     }
+            //     // Clear the file uploader field
+            //     oFileUploader.setValue("");
 
-                // Reset the value state for pancard file uploader
-                this.byId("gstfileUploader").setValueState("");
+            //     // Reset the value state for pancard file uploader
+            //     this.byId("gstfileUploader").setValueState("");
 
-            },
+            // },
+
             onDeleteFilegst: function (oEvent) {
                 var oButton = oEvent.getSource();
                 var oItem = oButton.getParent().getParent();  // Get the item from the List
@@ -239,254 +239,266 @@ sap.ui.define([
                 oModel.setProperty("/gst", aFiles);  // Update the model
                 MessageToast.show("File deleted successfully.");
             },
-           
-        onFileUploadpan: function (oEvent) {
-            var oFileUploader = oEvent.getSource();
-            var oFile = oFileUploader.oFileUpload.files[0]; // Get the uploaded file
-       
-            if (oFile) {
-                var sFileName = oFile.name;
-                var oReader = new FileReader();
-                var that = this;
-       
-                oReader.onload = function (e) {
-                    var sFileUrl = e.target.result;  // Get the file's base64 data URL
-       
-                    // Add the file info to the model
-                    var oModel = that.getView().getModel();
-                    var aFiles = oModel.getProperty("/pan");  // Get current documentfiles array
-       
-                    aFiles.push({
-                        fileName: sFileName,
-                        fileUrl: sFileUrl
-                    });
-       
-                    // Update the model with the new file
-                    oModel.setProperty("/pan", aFiles);
- 
-                      // Log updated /files data to console
-            console.log("Updated /Pan attachment:", oModel.getProperty("/pan"));
-       
-                    // Show success message
-                    MessageToast.show("File " + sFileName + " uploaded successfully.");
- 
-                    oModel.refresh(true);
-                };
-       
-                oReader.readAsDataURL(oFile);  // Read the file as Data URL (base64)
-            }
-            
-        },
-        formatAttachmentButtonText: function (pan) {
-            if (pan && pan.length > 0) {
-                return "View Attachments (" + pan.length + ")";
-            } else {
-                return "View Attachments (0)";
-            }
-        },
-        onFileUploadgst: function (oEvent) {
-            var oFileUploader = oEvent.getSource();
-            var oFile = oFileUploader.oFileUpload.files[0]; // Get the uploaded file
-       
-            if (oFile) {
-                var sFileName = oFile.name;
-                var oReader = new FileReader();
-                var that = this;
-       
-                oReader.onload = function (e) {
-                    var sFileUrl = e.target.result;  // Get the file's base64 data URL
-       
-                    // Add the file info to the model
-                    var oModel = that.getView().getModel();
-                    var aFiles = oModel.getProperty("/gst");  // Get current documentfiles array
-       
-                    aFiles.push({
-                        fileName: sFileName,
-                        fileUrl: sFileUrl
-                    });
-       
-                    // Update the model with the new file
-                    oModel.setProperty("/gst", aFiles);
- 
-                      // Log updated /files data to console
-            console.log("Updated /Gst attachment:", oModel.getProperty("/gst"));
-       
-                    // Show success message
-                    MessageToast.show("File " + sFileName + " uploaded successfully.");
- 
-                    oModel.refresh(true);
-                };
-       
-                oReader.readAsDataURL(oFile);  // Read the file as Data URL (base64)
-            }
-            
-        },
-        formatAttachmentButtonText: function (gst) {
-            if (gst && gst.length > 0) {
-                return "View Attachments (" + gst.length + ")";
-            } else {
-                return "View Attachments (0)";
-            }
-        },
-        // formatAttachmentButtonText: function (aDocumentFiles) {
-        //     if (aDocumentFiles && aDocumentFiles.length > 0) {
-        //         return "View Attachments (" + aDocumentFiles.length + ")";
-        //     } else {
-        //         return "View Attachments (0)";
-        //     }
-        // },
-       
-        onOpenDialogpan: function () {
-            if (!this._oDialog) {
-                this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilepan", this);
-                this.getView().addDependent(this._oDialog);
-            }
-            this._oDialog.open();
-        },
-       
-        onOpenDialoggst: function () {
-            if (!this._oDialog) {
-                this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilegst", this);
-                this.getView().addDependent(this._oDialog);
-            }
-            this._oDialog.open();
-        },
-       
-        onCloseDialogpan: function () {
-            this._oDialog.close();
-        },
 
-        onCloseDialoggst: function () {
-            this._oDialog.close();
-        },
-        
-        onFormsubmit: function () {
-            // Get the view
-            var oView = this.getView();
+            onFileUploadpan: function (oEvent) {
+                var oFileUploader = oEvent.getSource();
+                var oFile = oFileUploader.oFileUpload.files[0]; // Get the uploaded file
 
-            var oModel = this.getView().getModel();
-            
-            // Collect form field values
-            var oFormData = {
-                validity: oView.byId("datePicker").getDateValue(), 
-                relatedParty: oView.byId("radioGroup").getSelectedButton().getText(), 
-                supplierSpendType: oView.byId("supplierSpendType").getSelectedKey(), 
-                natureOfActivity: oView.byId("NatureofActivity").getSelectedKey(), 
-                sector: oView.byId("sectorComboBox").getSelectedKeys(),
-                FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(), 
-                panCardNumber: oView.byId("panInput").getValue(), 
-                gstinNumber: oView.byId("gstInput").getValue(), 
-                supplierFullName: oView.byId("SupplierNameInput").getValue(), 
-                supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(), 
-                supplierAddress: oView.byId("SupplierAddressInput").getValue(), 
-                supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(), 
-                primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(), 
-                primaryLastName: oView.byId("PrimaryLastnameInput").getValue(), 
-                primaryEmail: oView.byId("emailInput").getValue(), 
-                primaryPhone: oView.byId("numberInput").getValue() 
-            };
+                if (oFile) {
+                    var sFileName = oFile.name;
+                    var oReader = new FileReader();
+                    var that = this;
 
-            var oNewEntry = {
-                    "DigressionVendorCodeVal": oFormData.validity ,          
-                    "IsRelPartyVCode": oFormData.relatedParty,                          
-                    "SpendType": oFormData.supplierSpendType,               
-                    "NatureOfActivity": oFormData.natureOfActivity,                
-                    "Sector": oFormData.sector,                
-                    "FunAndSubfun": oFormData.FunctionandSubfunction,                
-                    "PANCardNo": oFormData.panCardNumber,                        
-                    "GSTIN": oFormData.gstinNumber,                       
-                    "SFullName": oFormData.supplierFullName,                
-                    "STradeNameGST": oFormData.supplierTradeName,                     
-                    "SAddress": oFormData.supplierAddress,   
-                    "SAddressGST": oFormData.supplierGstAddress,
-                    "PriContactFName": oFormData.primaryFirstName,                        
-                    "PriContactLName": oFormData.primaryLastName,                         
-                    "PriContactEmail": oFormData.primaryEmail,        
-                    "PriContactMNumber": oFormData.primaryPhone                
-                };
+                    oReader.onload = function (e) {
+                        var sFileUrl = e.target.result;  // Get the file's base64 data URL
 
-            // Output form data to the console (or process it further)
-            console.log(oFormData);
-            console.log(oNewEntry);
+                        // Add the file info to the model
+                        var oModel = that.getView().getModel();
+                        var aFiles = oModel.getProperty("/pan");  // Get current documentfiles array
 
-            // Use the OData create method
-            oModel.setUseBatch(false);
-            oModel.create("/odata/v4/attachments/supplierReqSrv", oNewEntry, {
-                method: "POST",
-                success: function () {
-                    MessageToast.show("Form submitted successfully.");
-                }.bind(this),  // Ensure 'this' refers to the controller instance
-                error: function () {
-                    MessageToast.show("Error while submitting the Form.");
+                        aFiles.push({
+                            fileName: sFileName,
+                            fileUrl: sFileUrl
+                        });
+
+                        // Update the model with the new file
+                        oModel.setProperty("/pan", aFiles);
+
+                        // Log updated /files data to console
+                        console.log("Updated /Pan attachment:", oModel.getProperty("/pan"));
+
+                        // Show success message
+                        MessageToast.show("File " + sFileName + " uploaded successfully.");
+
+                        oModel.refresh(true);
+                    };
+
+                    oReader.readAsDataURL(oFile);  // Read the file as Data URL (base64)
                 }
-            });
 
-        
-            // Show a success message (or handle the form data as needed)
-            MessageToast.show("Form submitted successfully!");
+            },
+            formatAttachmentButtonTextpan: function (pan) {
+                if (pan && pan.length > 0) {
+                    return "View Attachments (" + pan.length + ")";
+                } else {
+                    return "View Attachments (0)";
+                }
+            },
+            onFileUploadgst: function (oEvent) {
+                var oFileUploader = oEvent.getSource();
+                var oFile = oFileUploader.oFileUpload.files[0]; // Get the uploaded file
 
+                if (oFile) {
+                    var sFileName = oFile.name;
+                    var oReader = new FileReader();
+                    var that = this;
+
+                    oReader.onload = function (e) {
+                        var sFileUrl = e.target.result;  // Get the file's base64 data URL
+
+                        // Add the file info to the model
+                        var oModel = that.getView().getModel();
+                        var aFiles = oModel.getProperty("/gst");  // Get current documentfiles array
+
+                        aFiles.push({
+                            fileName: sFileName,
+                            fileUrl: sFileUrl
+                        });
+
+                        // Update the model with the new file
+                        oModel.setProperty("/gst", aFiles);
+
+                        // Log updated /files data to console
+                        console.log("Updated /Gst attachment:", oModel.getProperty("/gst"));
+
+                        // Show success message
+                        MessageToast.show("File " + sFileName + " uploaded successfully.");
+
+                        oModel.refresh(true);
+                    };
+
+                    oReader.readAsDataURL(oFile);  // Read the file as Data URL (base64)
+                }
+
+            },
+            formatAttachmentButtonTextgst: function (gst) {
+                if (gst && gst.length > 0) {
+                    return "View Attachments (" + gst.length + ")";
+                } else {
+                    return "View Attachments (0)";
+                }
+            },
+            // formatAttachmentButtonText: function (aDocumentFiles) {
+            //     if (aDocumentFiles && aDocumentFiles.length > 0) {
+            //         return "View Attachments (" + aDocumentFiles.length + ")";
+            //     } else {
+            //         return "View Attachments (0)";
+            //     }
+            // },
+
+            onOpenDialogpan: function () {
+                if (!this._oDialog) {
+                    
+                    this._oDialog = this.getView().byId("panDialog");
+
+                if (!this._oDialog) {
+                    this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilepan", this);
+                    this.getView().addDependent(this._oDialog);
+                }
+                this._oDialog.open();
+            }
         },
-        onReadDepartments: function(){
-            var that = this;
+
+            onOpenDialoggst: function () {
+                if (!this._oDialog) {
+
+                    this._oDialog = this.getView().byId("gstDialog");
+
+                    if (!this._oDialog) {
+                        this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilegst", this);
+                        this.getView().addDependent(this._oDialog);
+                    }
+                }
+                this._oDialog.open();
+            },
+
+            onCloseDialogpan: function () {
+                // this._oDialog = this.getView().byId("panDialog");
+                this._oDialog.close();
+            },
+
+            onCloseDialoggst: function () {
+                // this._oDialog = this.getView().byId("gstDialog");
+                this._oDialog.close();
+            },
+
+            onFormsubmit: function () {
+                // Get the view
+                var oView = this.getView();
+
+                var oModel = this.getView().getModel();
+
+                // Collect form field values
+                var oFormData = {
+                    validity: oView.byId("datePicker").getDateValue(),
+                    relatedParty: oView.byId("radioGroup").getSelectedButton().getText(),
+                    supplierSpendType: oView.byId("supplierSpendType").getSelectedKey(),
+                    natureOfActivity: oView.byId("NatureofActivity").getSelectedKey(),
+                    sector: oView.byId("sectorComboBox").getSelectedKeys(),
+                    FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(),
+                    panCardNumber: oView.byId("panInput").getValue(),
+                    gstinNumber: oView.byId("gstInput").getValue(),
+                    supplierFullName: oView.byId("SupplierNameInput").getValue(),
+                    supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(),
+                    supplierAddress: oView.byId("SupplierAddressInput").getValue(),
+                    supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(),
+                    primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(),
+                    primaryLastName: oView.byId("PrimaryLastnameInput").getValue(),
+                    primaryEmail: oView.byId("emailInput").getValue(),
+                    primaryPhone: oView.byId("numberInput").getValue()
+                };
+
+                var oNewEntry = {
+                    "DigressionVendorCodeVal": oFormData.validity,
+                    "IsRelPartyVCode": oFormData.relatedParty,
+                    "SpendType": oFormData.supplierSpendType,
+                    "NatureOfActivity": oFormData.natureOfActivity,
+                    "Sector": oFormData.sector,
+                    "FunAndSubfun": oFormData.FunctionandSubfunction,
+                    "PANCardNo": oFormData.panCardNumber,
+                    "GSTIN": oFormData.gstinNumber,
+                    "SFullName": oFormData.supplierFullName,
+                    "STradeNameGST": oFormData.supplierTradeName,
+                    "SAddress": oFormData.supplierAddress,
+                    "SAddressGST": oFormData.supplierGstAddress,
+                    "PriContactFName": oFormData.primaryFirstName,
+                    "PriContactLName": oFormData.primaryLastName,
+                    "PriContactEmail": oFormData.primaryEmail,
+                    "PriContactMNumber": oFormData.primaryPhone
+                };
+
+                // Output form data to the console (or process it further)
+                console.log(oFormData);
+                console.log(oNewEntry);
+
+                // Use the OData create method
+                oModel.setUseBatch(false);
+                oModel.create("/odata/v4/attachments/supplierReqSrv", oNewEntry, {
+                    method: "POST",
+                    success: function () {
+                        MessageToast.show("Form submitted successfully.");
+                    }.bind(this),  // Ensure 'this' refers to the controller instance
+                    error: function () {
+                        MessageToast.show("Error while submitting the Form.");
+                    }
+                });
+
+
+                // Show a success message (or handle the form data as needed)
+                MessageToast.show("Form submitted successfully!");
+
+            },
+            onReadDepartments: function () {
+                var that = this;
                 var oModel = this.getOwnerComponent().getModel();
                 oModel.read("/departmentsSrv", {
                     success: function (oData) {
                         console.log(oData);
                         var jModel = new sap.ui.model.json.JSONModel(oData);
                         that.getView().byId("FunctionandSubfunctionComboBox").setModel(jModel);
- 
+
                     },
                     error: function (oError) {
                         console.log(oError);
                     }
                 })
             },
-            onReadSector: function(){
+            onReadSector: function () {
                 var that = this;
-                    var oModel = this.getOwnerComponent().getModel();
-                    oModel.read("/SectorSrv", {
-                        success: function (oData) {
-                            console.log(oData);
-                            var jModel = new sap.ui.model.json.JSONModel(oData);
-                            that.getView().byId("sectorComboBox").setModel(jModel);
-     
-                        },
-                        error: function (oError) {
-                            console.log(oError);
-                        }
-                    })
-                },
-                onReadNatureofActivity: function(){
-                    var that = this;
-                        var oModel = this.getOwnerComponent().getModel();
-                        oModel.read("/NatureOfActivitySrv", {
-                            success: function (oData) {
-                                console.log(oData);
-                                var jModel = new sap.ui.model.json.JSONModel(oData);
-                                that.getView().byId("NatureofActivity").setModel(jModel);
-         
-                            },
-                            error: function (oError) {
-                                console.log(oError);
-                            }
-                        })
-                    },
-                    onReadSupplierSpendType: function(){
-                        var that = this;
-                            var oModel = this.getOwnerComponent().getModel();
-                            oModel.read("/SupplierSpendTypeSrv", {
-                                success: function (oData) {
-                                    console.log(oData);
-                                    var jModel = new sap.ui.model.json.JSONModel(oData);
-                                    that.getView().byId("supplierSpendType").setModel(jModel);
-             
-                                },
-                                error: function (oError) {
-                                    console.log(oError);
-                                }
-                            })
-                        },
+                var oModel = this.getOwnerComponent().getModel();
+                oModel.read("/SectorSrv", {
+                    success: function (oData) {
+                        console.log(oData);
+                        var jModel = new sap.ui.model.json.JSONModel(oData);
+                        that.getView().byId("sectorComboBox").setModel(jModel);
 
+                    },
+                    error: function (oError) {
+                        console.log(oError);
+                    }
+                })
+            },
+            onReadNatureofActivity: function () {
+                var that = this;
+                var oModel = this.getOwnerComponent().getModel();
+                oModel.read("/NatureOfActivitySrv", {
+                    success: function (oData) {
+                        console.log(oData);
+                        var jModel = new sap.ui.model.json.JSONModel(oData);
+                        that.getView().byId("NatureofActivity").setModel(jModel);
+
+                    },
+                    error: function (oError) {
+                        console.log(oError);
+                    }
+                })
+            },
+            onReadSupplierSpendType: function () {
+                var that = this;
+                var oModel = this.getOwnerComponent().getModel();
+                oModel.read("/SupplierSpendTypeSrv", {
+                    success: function (oData) {
+                        console.log(oData);
+                        var jModel = new sap.ui.model.json.JSONModel(oData);
+                        that.getView().byId("supplierSpendType").setModel(jModel);
+
+                    },
+                    error: function (oError) {
+                        console.log(oError);
+                    }
+                })
+            }
+
+        });
     });
-});
-      
+
