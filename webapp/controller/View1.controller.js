@@ -382,41 +382,45 @@ sap.ui.define([
             //     }
             // },
 
-            onOpenDialogpan: function () {
-                if (!this._oDialog) {
+           // Open the dialog for PAN attachments
+        onOpenDialogpan: function () {
+            if (!this._oPanDialog) {
+                this._oPanDialog = this.getView().byId("panDialog");
 
-                    this._oDialog = this.getView().byId("panDialog");
-
-                    if (!this._oDialog) {
-                        this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilepan", this);
-                        this.getView().addDependent(this._oDialog);
-                    }
-                    this._oDialog.open();
+                if (!this._oPanDialog) {
+                    this._oPanDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilepan", this);
+                    this.getView().addDependent(this._oPanDialog);
                 }
-            },
+            }
+            this._oPanDialog.open();
+        },
 
-            onOpenDialoggst: function () {
-                if (!this._oDialog) {
+        // Open the dialog for GST attachments
+        onOpenDialoggst: function () {
+            if (!this._oGstDialog) {
+                this._oGstDialog = this.getView().byId("gstDialog");
 
-                    this._oDialog = this.getView().byId("gstDialog");
-
-                    if (!this._oDialog) {
-                        this._oDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilegst", this);
-                        this.getView().addDependent(this._oDialog);
-                    }
+                if (!this._oGstDialog) {
+                    this._oGstDialog = sap.ui.xmlfragment("project3.view.fragments.uploadfilegst", this);
+                    this.getView().addDependent(this._oGstDialog);
                 }
-                this._oDialog.open();
-            },
+            }
+            this._oGstDialog.open();
+        },
 
-            onCloseDialogpan: function () {
-                // this._oDialog = this.getView().byId("panDialog");
-                this._oDialog.close();
-            },
+        // Close the PAN dialog
+        onCloseDialogpan: function () {
+            if (this._oPanDialog) {
+                this._oPanDialog.close();
+            }
+        },
 
-            onCloseDialoggst: function () {
-                // this._oDialog = this.getView().byId("gstDialog");
-                this._oDialog.close();
-            },
+        // Close the GST dialog
+        onCloseDialoggst: function () {
+            if (this._oGstDialog) {
+                this._oGstDialog.close();
+            }
+        },
 
             onFormsubmit: function () {
                 // Get the view
@@ -433,7 +437,7 @@ sap.ui.define([
                     sector: oView.byId("sectorComboBox").getSelectedKeys(),
                     FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(),
                     panCardNumber: oView.byId("panInput").getValue(),
-                    gstinNumber: oView.byId("gstInput").getValue(),
+                    gstinNumber: oView.byId("gstinInput").getValue(),
                     supplierFullName: oView.byId("SupplierNameInput").getValue(),
                     supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(),
                     supplierAddress: oView.byId("SupplierAddressInput").getValue(),
@@ -544,41 +548,77 @@ sap.ui.define([
                     }
                 })
             },
+
             onSave: function () {
-                // Get the view
                 var oView = this.getView();
 
-                var oModel = this.getView().getModel();
+            // Collect form data
+            var oFormData = {
+                validity: oView.byId("datePicker").getDateValue(),
+                relatedParty: oView.byId("radioGroup").getSelectedButton().getText(),
+                supplierSpendType: oView.byId("supplierSpendType").getSelectedKey(),
+                natureOfActivity: oView.byId("NatureofActivity").getSelectedKey(),
+                sector: oView.byId("sectorComboBox").getSelectedKeys().join(", "),
+                FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys().join(", "),
+                panCardNumber: oView.byId("panInput").getValue(),
+                gstinNumber: oView.byId("gstinInput").getValue(),
+                supplierFullName: oView.byId("SupplierNameInput").getValue(),
+                supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(),
+                supplierAddress: oView.byId("SupplierAddressInput").getValue(),
+                supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(),
+                primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(),
+                primaryLastName: oView.byId("PrimaryLastnameInput").getValue(),
+                primaryEmail: oView.byId("emailInput").getValue(),
+                primaryPhone: oView.byId("numberInput").getValue()
+            };
 
-                // Collect form field values
-                var oFormData = {
-                    validity: oView.byId("datePicker").getDateValue(),
-                    relatedParty: oView.byId("radioGroup").getSelectedButton().getText(),
-                    supplierSpendType: oView.byId("supplierSpendType").getSelectedKey(),
-                    natureOfActivity: oView.byId("NatureofActivity").getSelectedKey(),
-                    sector: oView.byId("sectorComboBox").getSelectedKeys(),
-                    FunctionandSubfunction: oView.byId("FunctionandSubfunctionComboBox").getSelectedKeys(),
-                    panCardNumber: oView.byId("panInput").getValue(),
-                    gstinNumber: oView.byId("gstinInput").getValue(),
-                    supplierFullName: oView.byId("SupplierNameInput").getValue(),
-                    supplierTradeName: oView.byId("SuppliertradeNameInput").getValue(),
-                    supplierAddress: oView.byId("SupplierAddressInput").getValue(),
-                    supplierGstAddress: oView.byId("SupplierAddressgstInput").getValue(),
-                    primaryFirstName: oView.byId("PrimaryFirstnameInput").getValue(),
-                    primaryLastName: oView.byId("PrimaryLastnameInput").getValue(),
-                    primaryEmail: oView.byId("emailInput").getValue(),
-                    primaryPhone: oView.byId("numberInput").getValue()
-                };
+            // Create a string representation of the form data
+            // var sFormDataText = `
+            //     Validity: ${oFormData.validity}
+            //     Related Party: ${oFormData.relatedParty}
+            //     Supplier Spend Type: ${oFormData.supplierSpendType}
+            //     Nature of Activity: ${oFormData.natureOfActivity}
+            //     Sector: ${oFormData.sector}
+            //     Function and Subfunction: ${oFormData.FunctionandSubfunction}
+            //     PAN Card Number: ${oFormData.panCardNumber}
+            //     GSTIN Number: ${oFormData.gstinNumber}
+            //     Supplier Full Name: ${oFormData.supplierFullName}
+            //     Supplier Trade Name: ${oFormData.supplierTradeName}
+            //     Supplier Address: ${oFormData.supplierAddress}
+            //     Supplier GST Address: ${oFormData.supplierGstAddress}
+            //     Primary Contact First Name: ${oFormData.primaryFirstName}
+            //     Primary Contact Last Name: ${oFormData.primaryLastName}
+            //     Primary Email: ${oFormData.primaryEmail}
+            //     Primary Phone: ${oFormData.primaryPhone}
+            // `;
 
-                // Output form data to the console (or process it further)
-                console.log(oFormData);
+             // Convert the form data object to a JSON string
+             var sFormData = JSON.stringify(oFormData);
 
+             // Store the form data in localStorage
+             localStorage.setItem("formData", sFormData);
+ 
+             // Confirmation message
+             MessageToast.show("Form data saved successfully in local storage.");
 
-                // Show a success message (or handle the form data as needed)
-                MessageToast.show("Form submitted successfully!");
+            // // Create the dialog to show form data
+            // var oDialog = new sap.m.Dialog({
+            //     title: "Form Data",
+            //     content: new sap.m.Text({ text: sFormDataText }),
+            //     beginButton: new sap.m.Button({
+            //         text: "Close",
+            //         press: function () {
+            //             oDialog.close();
+            //         }
+            //     }),
+            //     afterClose: function () {
+            //         oDialog.destroy();
+            //     }
+            // });
 
-            },
-
+            // // Open the dialog
+            // oDialog.open();
+        }
 
         });
     });

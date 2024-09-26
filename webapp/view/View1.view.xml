@@ -74,8 +74,7 @@
                     />
                     <Select
                         id="supplierSpendType"
-                        selectedKey=""
-                    >
+                        selectedKey="">
                         <items>
                             <core:Item
                                 id="_IDGenItem"
@@ -221,6 +220,16 @@
                         text="{i18n>data50}"
                         required="true"
                     />
+                    <!-- <Select id="parentDropdown" items="{  path: '/Categories'}">
+                    <core:Item id="_IDGenItem2" key="{CategoryID}" text="{CategoryName}" />
+                </Select>
+                <MultiComboBox id="childMultiComboBox" 
+                       visible="{/childComboBoxVisible}" 
+                       items="{
+                           path: '/childOptions'
+                       }">
+            <core:Item id="_IDGenItem211" key="{key}" text="{text}" />
+        </MultiComboBox> -->
                     <MultiComboBox id="FunctionandSubfunctionComboBox" selectedKeys="" placeholder="Select multiple {i18n>data50}">
                         <items>
                             <core:Item
