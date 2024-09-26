@@ -164,17 +164,37 @@ sap.ui.define([
                 }
             },
 
-            onNumberChange: function (oEvent) {
-                var oInput = oEvent.getSource();
-                var sNumber = oInput.getValue();
+            // onNumberChange: function (oEvent) {
+            //     var oInput = oEvent.getSource();
+            //     var sNumber = oInput.getValue();
 
 
-                var numberPattern = /^[0-9]{10}$/;
+            //     var numberPattern = /^[0-9]{10}$/;
 
-                if (numberPattern.test(sNumber)) {
+            //     if (numberPattern.test(sNumber)) {
+            //         oInput.setValueState("Success");
+            //     } else {
+            //         oInput.setValueState("Error");
+            //     }
+            // },
+            onNumberChange: function(oEvent) {
+                var oInput = oEvent.getSource();   // Get the input control
+                var sValue = oInput.getValue();    // Get the current value of the input
+            
+                
+                sValue = sValue.replace(/\D/g, '');  // This removes all non-numeric characters
+        
+                if (sValue.length > 10) {
+                    sValue = sValue.substring(0, 10);  // Limit the string to 10 digits
+                }
+            
+                oInput.setValue(sValue);
+            
+                if (sValue.length === 10) {
                     oInput.setValueState("Success");
                 } else {
                     oInput.setValueState("Error");
+                    oInput.setValueStateText("Mobile number must be 10 digits.");
                 }
             },
 

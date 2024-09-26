@@ -10,7 +10,7 @@
 >
     <Page
         id="page"
-        title=""
+        title="{i18n>Apptitle}"
     >
         <VBox
             id="_IDGenVBox1"
@@ -382,6 +382,7 @@
                         value="{/panCardValue}"
                         liveChange="onPanCardChange"
                         valueStateText="Invalid PAN Card format. Please enter a valid PAN (e.g., ABCDE1234F)."
+                        maxLength="10"
                     />
                     <Button
                         id="_IDGenButton110"
@@ -421,6 +422,7 @@
                         value="{/gstinValue}"
                         liveChange="onGSTINChange"
                         valueStateText="Invalid PAN Card format. Please enter a valid PAN (e.g., ABCDE1234F)."
+                        maxLength="15"
                     />
                     <Button
                         id="_IDGenButton"
@@ -543,6 +545,7 @@
                         value="{/numberValue}"
                         liveChange="onNumberChange"
                         valueStateText="Invalid Number. Please enter a valid Mobile Number."
+                        
                     />
                     <Button
                         id="_IDGenButton4"
